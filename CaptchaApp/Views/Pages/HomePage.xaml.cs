@@ -62,7 +62,6 @@ namespace CaptchaApp.Views.Pages
                     TBoxCaptchaInput.Text = captchaGeneration.captcha;
                     BtnRepeat.IsEnabled = false;
                     TBoxCaptchaInput.IsEnabled = false;
-                    Console.WriteLine("The usual login scenario | State: Skip");
                 }
             }
             catch (Exception)
@@ -75,7 +74,7 @@ namespace CaptchaApp.Views.Pages
                 if (TBoxCaptchaInput.Text != captchaGeneration.captcha)
                 {
                     MessageBox.Show("Капча введена неправильно", "Капча", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    Console.WriteLine(captchaGeneration.skip);
+                    TBoxCaptchaInput.Text = null;
                     // Повторная генерация captcha
                     RepeatGeneration();
                 }
