@@ -8,4 +8,4 @@
 
 > Preview
 
-![image](https://user-images.githubusercontent.com/97740963/236680020-1830052d-0a2c-4897-b305-7d9cd6f7384f.png)
+![image](https://user-images.githubusercontent.com/97740963/236682632-42bd7957-26fe-404d-b978-8398106cc733.png)
