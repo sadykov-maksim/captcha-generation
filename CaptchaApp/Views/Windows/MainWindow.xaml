@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CaptchaApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="800" WindowStartupLocation="CenterScreen" Loaded="WindowLoaded">
+        Title="{Binding ElementName=MainFrame, Path=Content.Title}" Height="650" Width="800" WindowStartupLocation="CenterScreen" Loaded="WindowLoaded" LayoutUpdated="WindowLayoutUpdated">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="65"></RowDefinition>
@@ -21,7 +21,7 @@
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Button Width="65" Height="25" x:Name="BtnBack" Click="BtnBackClick">Назад</Button>
+                        <Button Width="65" Height="25" x:Name="BtnPreviousPage" Click="BtnPreviousPageClick">Вернуться</Button>
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="1">
@@ -40,9 +40,23 @@
             <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" ContentRendered="MainFrameContentRendered" ></Frame>
         </Border>
         <Border Grid.Row="2" Background="Gray">
-            <StackPanel VerticalAlignment="Center" Margin="10 0 0 0">
-                <TextBlock Foreground="White">Мастер капча 2023</TextBlock>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0">
+                    <StackPanel VerticalAlignment="Center" Margin="10 0 0 0">
+                        <TextBlock Foreground="White">Мастер капча 2023</TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0 10 0">
+                        <TextBlock Foreground="White" x:Name="TBlockNumberSolutions"></TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Border>
     </Grid>
 </Window>

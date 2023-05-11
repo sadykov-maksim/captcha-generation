@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using CaptchaApp.Classes;
-using CaptchaApp.Models;
+using CaptchaGenerationLibrary;
+
 namespace CaptchaApp.Views.Pages
 {
     /// <summary>
@@ -21,76 +11,10 @@ namespace CaptchaApp.Views.Pages
     /// </summary>
     public partial class HomePage : Page
     {
-        CaptchaGeneration captchaGeneration = new CaptchaGeneration();
-        List<Skip> _skips = new List<Skip>();
-        public HomePage(List<Skip> skips)
+        CaptchaGeneration generation = new CaptchaGeneration();
+        public HomePage()
         {
             InitializeComponent();
-            this._skips = skips;
-        }
-        /// <summary>
-        /// Повторное генерирование капчи
-        /// </summary>
-        private void RepeatGeneration()
-        {
-            captchaGeneration.captcha = string.Empty;
-            SPanelCaptcha.Children.Clear();
-            captchaGeneration.Generation(SPanelCaptcha);
-        }
-
-        /// <summary>
-        /// Действие кнопки заключается в создании новой капчи
-        /// </summary>
-        private void BtnRepeatClick(object sender, RoutedEventArgs e)
-        {
-            captchaGeneration.captcha = string.Empty;
-            SPanelCaptcha.Children.Clear();
-            captchaGeneration.Generation(SPanelCaptcha);
-        }
-        
-        /// <summary>
-        /// Действие кнопки - Проверить капчу
-        /// </summary>
-        private void BtnCheckoutClick(object sender, RoutedEventArgs e)
-        {
-            // Проверка статуса пропуска
-            try
-            {
-                var skip = _skips.First();   
-                if (skip.state)
-                {
-                    TBoxCaptchaInput.Text = captchaGeneration.captcha;
-                    BtnRepeat.IsEnabled = false;
-                    TBoxCaptchaInput.IsEnabled = false;
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("The usual login scenario | State: No Skip");
-            }
-            // Проверка поля ввода captcha на наличие пустой строки
-            if (!String.IsNullOrEmpty(TBoxCaptchaInput.Text))
-            {
-                if (TBoxCaptchaInput.Text != captchaGeneration.captcha)
-                {
-                    MessageBox.Show("Капча введена неправильно", "Капча", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    TBoxCaptchaInput.Text = null;
-                    // Повторная генерация captcha
-                    RepeatGeneration();
-                }
-                else
-                {
-                    MessageBox.Show("Действие было успешно завершено", "Капча", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.NavigationService.Navigate(new SuccessPage());
-                }
-            }
-            else
-            {
-                MessageBox.Show("Ошибка проверки", "Капча", MessageBoxButton.OK, MessageBoxImage.Warning);
-                // Повторная генерация captcha
-                RepeatGeneration();
-            }
-
         }
 
         /// <summary>
@@ -100,6 +24,106 @@ namespace CaptchaApp.Views.Pages
         {
             // Генерация captcha
             RepeatGeneration();
+            // Блокируем кнопку
+            BtnCheckout.IsEnabled = false;
+            TBoxCaptchaInput.Text = String.Empty;
+        }
+
+        /// <summary>
+        /// Действие при обновление рабочей области
+        /// </summary>
+        private void PageLayoutUpdated(object sender, EventArgs e)
+        {
+            switch (App.stateCaptcha)
+            {
+                case true:
+                    TBoxCaptchaInput.Text = generation.captcha;
+                    break;
+                //case false: | Автоматическое решение
+                //    TBoxCaptchaInput.Text = captchaGeneration.captcha;
+                //    break;
+                default:
+                    break;
+            }
+            GC.Collect(1, GCCollectionMode.Forced);
+        }
+
+        /// <summary>
+        /// Повторное генерирование капчи
+        /// </summary>
+        private void RepeatGeneration()
+        {
+            // Очистка значения капчи
+            generation.captcha = string.Empty;
+            // Очистка области отображения капчи
+            SPanelCaptcha.Children.Clear();
+            // Создание новой капчи
+            generation.Generation(SPanelCaptcha);
+        }
+
+        /// <summary>
+        /// Действие кнопки - Создание новой капчи
+        /// </summary>
+        private void BtnRepeatClick(object sender, RoutedEventArgs e)
+        {
+            // Вызов метода
+            RepeatGeneration();
+        }
+
+        /// <summary>
+        /// Проверка поля ввода captcha на наличие пустой строки
+        /// </summary>
+        private void TBoxCaptchaInputTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(TBoxCaptchaInput.Text))
+            {
+                BtnCheckout.IsEnabled = true;
+            }
+            else
+            {
+                BtnCheckout.IsEnabled = false;
+
+            }
+        }
+
+        /// <summary>
+        /// Действие кнопки - Проверить капчу
+        /// </summary>
+        private void BtnCheckoutClick(object sender, RoutedEventArgs e)
+        {
+            // Обработка исключений
+            try
+            {
+                // Проверка состояния капчи
+                switch (App.stateCaptcha)
+                {
+                    case true:
+                        this.NavigationService.Navigate(new SuccessPage());
+                        break;
+                    case false:
+                        // Проверка поля ввода captcha на корректность данных
+                        if (TBoxCaptchaInput.Text != generation.captcha)
+                        {
+                            MessageBox.Show("Капча введена неправильно", "Система проверки капчи", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            TBoxCaptchaInput.Text = String.Empty;
+                            // Повторная генерация captcha
+                            RepeatGeneration();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Действие было успешно завершено", "Система проверки капчи", MessageBoxButton.OK, MessageBoxImage.Information);
+                            this.NavigationService.Navigate(new SuccessPage());
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Система проверки капчи", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
         }
     }
 }

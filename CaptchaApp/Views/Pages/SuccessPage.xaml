@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:CaptchaApp.Views.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="800"
-      Title="SuccessPage">
+      Title="Страница успешного ввода капчи" Loaded="PageLoaded">
 
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">

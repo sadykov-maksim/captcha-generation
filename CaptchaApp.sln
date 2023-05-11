@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptchaApp", "CaptchaApp\CaptchaApp.csproj", "{3E4D5579-E40B-411D-9AB5-8C9B9220C01F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptchaGenerationLibrary", "CaptchaGenerationLibrary\CaptchaGenerationLibrary.csproj", "{8DC523AD-41A8-40A0-8E8C-C897536B71BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3E4D5579-E40B-411D-9AB5-8C9B9220C01F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E4D5579-E40B-411D-9AB5-8C9B9220C01F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E4D5579-E40B-411D-9AB5-8C9B9220C01F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DC523AD-41A8-40A0-8E8C-C897536B71BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC523AD-41A8-40A0-8E8C-C897536B71BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC523AD-41A8-40A0-8E8C-C897536B71BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC523AD-41A8-40A0-8E8C-C897536B71BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

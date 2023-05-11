@@ -13,5 +13,7 @@ namespace CaptchaApp
     /// </summary>
     public partial class App : Application
     {
+        public static bool stateCaptcha = false;
+        public static int numberSolutions = 0;
     }
 }
