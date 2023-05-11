@@ -8,4 +8,7 @@
 
 > Preview
 
-![image](https://user-images.githubusercontent.com/97740963/236682632-42bd7957-26fe-404d-b978-8398106cc733.png)
+![image](https://github.com/sadykov-maksim/captcha-generation/assets/97740963/72334f75-5193-42e7-8a1e-7ace39fadfd9)
+![image](https://github.com/sadykov-maksim/captcha-generation/assets/97740963/d9963e5b-353b-4091-957b-b556de848d84)
+![image](https://github.com/sadykov-maksim/captcha-generation/assets/97740963/8f574071-6bbc-4d1a-8ac2-4144b6d359ad)
+
